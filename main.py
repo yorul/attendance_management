@@ -97,6 +97,12 @@ def home():
         return render_template('home.html', username=session['username'])
     return redirect(url_for('login'))
 
+@app.route('/')
+def home_root():
+    if 'loggedin' in session:
+        return render_template('home.html', username=session['username'])
+    return redirect(url_for('login'))
+
 @app.route('/record-attendance', methods=['POST'])
 def record_attendance():
     if 'loggedin' in session:
@@ -135,7 +141,7 @@ def record_attendance():
     else:
         return redirect(url_for('login'))
 
-@app.route('/admin')
+@app.route('/attendance/admin')
 def admin():
     if 'loggedin' in session and session['username'] == 'admin':
         conn = get_db_connection()
