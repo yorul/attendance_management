@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Home</title>
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ775/resC6X9oJiXQfTPEY/kefP4TaXMRdIi" crossorigin="anonymous">
+    	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+	</head>
+	<body class="loggedin">
+		<nav class="navtop">
+			<div>
+				<h1>出退勤時間記録システム</h1>
+                <a href="{{ url_for('home') }}"><i class="fas fa-home"></i>Home</a>
+				<a href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i>Logout</a>
+			</div>
+		</nav>
+		<div class="content">
+			<h2>おかえりなさい, {{ username }}!</h2>
+            <p>現在時刻: <span id="clock"></span></p>
+            <script>
+                $(document).ready(function(){
+                    setInterval(function(){
+                        $('#clock').text(moment().format('YYYY-MM-DD HH:mm:ss'));
+                    }, 1000);
+                });
+            </script>
+            <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5sMTH+weQJb9HqGpG5r5jRTA5w" crossorigin="anonymous"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WOa1yAFu3Fz3Sjzj6i3YmK80u1jjCmJf5" crossorigin="anonymous"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+            <form action="/record-attendance" method="post">
+                <input type="submit" name="action" value="出勤記録" class="btn btn-primary">
+                <input type="submit" name="action" value="退勤記録" class="btn btn-secondary">
+            </form>
+		</div>
+	</body>
+</html>
+
