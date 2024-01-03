@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session, jsonify
+from flask import Flask, render_template, request, redirect, url_for, session, jsonify, flash
 from datetime import datetime
 import psycopg2
 import psycopg2.extras
@@ -119,6 +119,7 @@ def record_attendance():
         try:
             if action == '出勤記録':
                 cur.execute('INSERT INTO attendance (user_id, check_in_time) VALUES (%s, %s)', (user_id, formatted_jst_time))
+                flash('出勤時間を記録しました：' + formatted_jst_time )
             elif action == '退勤記録':
                 cur.execute("""
                     UPDATE attendance 
@@ -130,9 +131,11 @@ def record_attendance():
                         LIMIT 1
                     )
                 """, (formatted_jst_time, user_id))
+                flash('退勤時間を記録しました：' + formatted_jst_time )
             conn.commit()
         except Exception as e:
             print(e)
+            flash('記録が失敗しました')
         finally:
             cur.close()
             conn.close()

@@ -18,6 +18,13 @@
 			</div>
 		</nav>
 		<div class="content">
+			{% with messages = get_flashed_messages() %}
+				{% if messages %}
+					<script>
+					alert('{{ messages[0] }}');
+					</script>
+				{% endif %}
+			{% endwith %}
 			<h2>おかえりなさい, {{ username }}!</h2>
             <p>現在時刻: <span id="clock"></span></p>
             <script>
